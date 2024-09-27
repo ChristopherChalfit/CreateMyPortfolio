@@ -1,6 +1,13 @@
-import { bootstrapApplication } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'; // Importez platformBrowserDynamic
+import { AppModule } from './app/app.module'; // Importez votre module
+import { enableProdMode, isDevMode, StaticProvider } from '@angular/core';
 import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+if (isDevMode()) {
+  enableProdMode();
+}
+
+// ... code existant ...
+platformBrowserDynamic()
+  .bootstrapModule(AppModule) // Remplacez {...appConfig} par { providers: [] }
+  .catch((err: any) => console.error(err));

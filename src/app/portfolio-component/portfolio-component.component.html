@@ -1,0 +1,9 @@
+<div *ngIf="user$ | async as user; else noUser">
+  <p>ID: {{ user.id }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>Nom: {{ user.name }}</p>
+  <p>Rôle: {{ user.role }}</p>
+</div>
+<ng-template #noUser>
+  <p>Utilisateur inexistant</p>
+</ng-template>
