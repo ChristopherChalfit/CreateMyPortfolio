@@ -1,10 +1,10 @@
 import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
-import { loginUser, disconnectUser, errorLogin } from "./auth-action";
-export const selectUserState = createFeatureSelector<UserState>('user');
-export const selectUser = createSelector(selectUserState, (state: UserState) => state.user);
-export const selectUserError = createSelector(selectUserState, (state: UserState) => state.error);
+import { errorPortfolio, getPortfolio } from "./portfolio-action";
+export const selectPortfolioState = createFeatureSelector<PortfolioState>('portfolio');
+export const selectPortfolio = createSelector(selectPortfolioState, (state: PortfolioState) => state.portfolio);
+export const selectPortfolioError = createSelector(selectPortfolioState, (state: PortfolioState) => state.error);
 
-export interface User {
+export interface Portfolio {
     id: string;
     firstName: string | null;  
     lastName: string | null;  
@@ -74,17 +74,16 @@ export interface Education {
     userId: string;
 }
 
-export interface UserState {
-    user: User | null;
+export interface PortfolioState {
+    portfolio: Portfolio | null;
     error: string | null;
 }
-export const initialState : UserState= {
-    user: null,
+export const initialState : PortfolioState= {
+    portfolio: null,
     error: null
 }
-export const userReducer = createReducer(
+export const portfolioReducer = createReducer(
     initialState,
-    on(loginUser, (state, { user }) => ({ ...state, user, error: null })),
-    on(disconnectUser, state => ({ ...state, user: null })), 
-    on(errorLogin, (state, { error }) => ({ ...state, error }))
+    on(getPortfolio, (state, { portfolio }) => ({ ...state, portfolio, error: null })),
+    on(errorPortfolio, (state, { error }) => ({ ...state, error }))
   );

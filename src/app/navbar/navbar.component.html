@@ -118,7 +118,7 @@
   <ng-template #loggedInLinks>
     <ul>
       <li>
-        <a routerLink="/profile">Profile {{ (user$ | async)?.name }}</a>
+        <a routerLink="/profile">Profile {{ (user$ | async)?.firstName }}</a>
       </li>
       <li>
         <a>Logout</a>

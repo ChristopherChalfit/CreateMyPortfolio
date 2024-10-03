@@ -59,10 +59,24 @@ export class Authcomponent implements OnInit {
                 console.log(userResponse);
                 this.store.dispatch(loginUser({
                   user: {
-                    id: userResponse.id, 
+                    id: userResponse.id,
+                    firstName: userResponse.firstName, 
+                    lastName: userResponse.lastName, 
+                    birthDate: userResponse.birthDate, 
                     email: userResponse.email,
-                    name: userResponse.name,
-                    role: userResponse.role
+                    phone: userResponse.phone, 
+                    address: userResponse.address, 
+                    website: userResponse.website, 
+                    github: userResponse.github, 
+                    linkedin: userResponse.linkedin, 
+                    vehicle: userResponse.vehicle, 
+                    role: userResponse.role,
+                    drivingLicenses: userResponse.drivingLicenses, 
+                    socialLinks: userResponse.socialLinks, 
+                    languages: userResponse.languages, 
+                    skills: userResponse.skills, 
+                    experiences: userResponse.experiences, 
+                    educations: userResponse.educations 
                   }
                 }));
 

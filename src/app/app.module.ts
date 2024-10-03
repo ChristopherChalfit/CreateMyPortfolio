@@ -24,15 +24,19 @@ import {
 } from '@angular/common/http';
 import { routes } from './app.routes';
 import { userReducer } from './store/auth/auth-reducer';
+import { ProfileComponent } from './profile/profile.component';
+import { PortfolionavbarComponent } from './portfolionavbar/portfolionavbar.component';
+import { PortfoliofooterComponent } from './portfoliofooter/portfoliofooter.component';
+import { portfolioReducer } from './store/portfolio/portfolio-reducer';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, NavbarComponent],
+  declarations: [AppComponent, FooterComponent, NavbarComponent, ProfileComponent, PortfolionavbarComponent, PortfoliofooterComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     RouterOutlet,
-    StoreModule.forRoot({user: userReducer}),
-    RouterModule.forRoot([]),
+    StoreModule.forRoot({user: userReducer, portfolio: portfolioReducer}),
+    RouterModule.forRoot(routes),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode
