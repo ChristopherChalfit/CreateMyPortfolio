@@ -39,6 +39,7 @@ export class PortfolioComponent implements OnInit {
             lastName: userResponse.lastName, 
             birthDate: userResponse.birthDate, 
             email: userResponse.email,
+            photoProfile: userResponse.photoProfile,
             phone: userResponse.phone, 
             address: userResponse.address, 
             website: userResponse.website, 

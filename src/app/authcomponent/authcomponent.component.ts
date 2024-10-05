@@ -63,6 +63,7 @@ export class Authcomponent implements OnInit {
                     firstName: userResponse.firstName, 
                     lastName: userResponse.lastName, 
                     birthDate: userResponse.birthDate, 
+                    photoProfile: userResponse.photoProfile,
                     email: userResponse.email,
                     phone: userResponse.phone, 
                     address: userResponse.address, 

@@ -10,6 +10,7 @@ export interface Portfolio {
     lastName: string | null;  
     birthDate: string | null;  
     email: string;
+    photoProfile: string;
     phone: string | null;  
     address: string | null;  
     website: string | null;  
