@@ -1,0 +1,170 @@
+<div *ngIf="visible">
+        <div *ngIf="section === 'informations'" id="editProfileModal" class="flex fixed inset-0 z-50 bg-black bg-opacity-50 justify-center items-center" (click)="close()">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 sm:mx-auto max-h-[80vh] sm:max-h-screen overflow-y-auto" (click)="$event.stopPropagation()">
+              <div class="modal-header flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold mb-4">Modifier {{ section }}</h3>
+      
+                <button type="button" class="text-gray-500 text-2xl" (click)="close()">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editInfoPerso" (ngSubmit)="saveChanges(section)">
+                  <div class="mb-4">
+                    <label for="firstName" class="form-label">Prénom</label>
+                    <input 
+                      type="text" 
+                      id="firstName" 
+                      formControlName="firstName" 
+                      class="form-control border border-gray-300 rounded p-2 w-full"
+                      [value]="(user$ | async)?.firstName">
+                  </div>
+                  <div class="mb-4">
+                    <label for="lastName" class="form-label">Nom</label>
+                    <input 
+                      type="text" 
+                      id="lastName" 
+                      formControlName="lastName" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.lastName" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      formControlName="email" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.email" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="phone" class="form-label">Téléphone</label>
+                    <input 
+                      type="text" 
+                      id="phone" 
+                      formControlName="phone" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.phone" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="birthDate" class="form-label">Date de naissance</label>
+                    <input 
+                      type="date" 
+                      id="birthDate" 
+                      formControlName="birthDate" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.birthDate" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="address" class="form-label">Adresse</label>
+                    <input 
+                      type="text" 
+                      id="address" 
+                      formControlName="address" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.address" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="website" class="form-label">Site Web</label>
+                    <input 
+                      type="text" 
+                      id="website" 
+                      formControlName="website" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.website" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="github" class="form-label">GitHub</label>
+                    <input 
+                      type="text" 
+                      id="github" 
+                      formControlName="github" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.github" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="linkedin" class="form-label">LinkedIn</label>
+                    <input 
+                      type="text" 
+                      id="linkedin" 
+                      formControlName="linkedin" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.linkedin" 
+                      required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="vehicle" class="form-label">Véhicule</label>
+                    <input 
+                      type="text" 
+                      id="vehicle" 
+                      formControlName="vehicle" 
+                      class="form-control border border-gray-300 rounded p-2 w-full" 
+                      [value]="(user$ | async)?.vehicle" 
+                      required>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+  
+          <div *ngIf="section === 'skills'" id="editSkillsModal" class="flex fixed inset-0 z-50 bg-black bg-opacity-50 justify-center items-center" (click)="close()">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 sm:mx-auto max-h-[80vh] sm:max-h-screen overflow-y-auto" (click)="$event.stopPropagation()">
+              <div class="modal-header flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold mb-4">Modifier les Compétences</h3>
+                <button type="button" class="text-gray-500 text-2xl" (click)="close()">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editSkills" (ngSubmit)="saveChanges('skills')">
+                  <div formArrayName="skills">
+                    <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i" class="mb-4">
+                      <label for="name-{{i}}" class="form-label">Nom de la compétence</label>
+                      <input 
+                        type="text" 
+                        id="name-{{i}}" 
+                        formControlName="name" 
+                        class="form-control border border-gray-300 rounded p-2 w-full">
+                      <button type="button" class="text-red-500" (click)="removeInfo('skills',i)">Supprimer</button>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary w-full bg-gray-400 text-white py-2 rounded mb-4" (click)="addInfo('skills')">Ajouter une compétence</button>
+                  <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="section === 'languages'" id="editSkillsModal" class="flex fixed inset-0 z-50 bg-black bg-opacity-50 justify-center items-center" (click)="close()">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 sm:mx-auto max-h-[80vh] sm:max-h-screen overflow-y-auto" (click)="$event.stopPropagation()">
+              <div class="modal-header flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold mb-4">Modifier les Langues</h3>
+                <button type="button" class="text-gray-500 text-2xl" (click)="close()">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editLanguages" (ngSubmit)="saveChanges('languages')">
+                  <div formArrayName="languages"> 
+                    <div *ngFor="let language of languages.controls; let i = index" [formGroupName]="i" class="mb-4">
+                      <label for="name-{{i}}" class="form-label">Nom de la langue</label>
+                      <input 
+                        type="text" 
+                        id="name-{{i}}" 
+                        formControlName="name" 
+                        class="form-control border border-gray-300 rounded p-2 w-full">
+                      <button type="button" class="text-red-500" (click)="removeInfo('languages',i)">Supprimer</button>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary w-full bg-gray-400 text-white py-2 rounded mb-4" (click)="addInfo('languages')">Ajouter une compétence</button>
+                  <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+      <div class="flex justify-end">
+        <button (click)="saveChanges(section)" class="bg-blue-500 text-white px-4 py-2 rounded">Enregistrer</button>
+        <button (click)="close()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Annuler</button>
+      </div>
+    </div>

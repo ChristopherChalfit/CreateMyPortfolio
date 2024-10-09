@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 import { selectUser, User, UserState } from '../store/auth/auth-reducer';
 import { Store } from '@ngrx/store';
 import { loginUser } from '../store/auth/auth-action';
+import { Router } from '@angular/router'; // Ajout de l'importation du Router
+import { DateFormatService } from '../date-format.service';
 
 @Component({
   selector: 'app-authcomponent',
@@ -26,7 +28,7 @@ export class Authcomponent implements OnInit {
   registerForm!: FormGroup;
   user$: Observable<User | null>;
 
-  constructor(private apiService: ApiService, private fb: FormBuilder, private store: Store<UserState>) { 
+  constructor(private apiService: ApiService, private fb: FormBuilder, private store: Store<UserState>, private router: Router, private dateService: DateFormatService) { 
     this.user$ = this.store.select(selectUser);
   }
 
@@ -34,10 +36,12 @@ export class Authcomponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false],
     });
 
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -50,20 +54,22 @@ export class Authcomponent implements OnInit {
       const loginData = this.loginForm.value;
       this.apiService.postData('auth/login', loginData).subscribe({
         next: (response) => {
-          console.log('Login réussie :', response);
           if (response && response.access_token) {
+            if(this.loginForm.get('rememberMe')?.value === true){
             localStorage.setItem('token', response.access_token);
-            console.log('Token d\'accès stocké avec succès');
+          }else{
+            sessionStorage.setItem('token', response.access_token);
+          }
             this.apiService.getDataWithToken('auth').subscribe({
               next: (userResponse) => {
-                console.log(userResponse);
                 this.store.dispatch(loginUser({
                   user: {
                     id: userResponse.id,
                     firstName: userResponse.firstName, 
                     lastName: userResponse.lastName, 
-                    birthDate: userResponse.birthDate, 
+                    birthDate: this.dateService.formatDate(userResponse.birthDate), 
                     photoProfile: userResponse.photoProfile,
+                    linkId: userResponse.linkId,
                     email: userResponse.email,
                     phone: userResponse.phone, 
                     address: userResponse.address, 
@@ -80,8 +86,8 @@ export class Authcomponent implements OnInit {
                     educations: userResponse.educations 
                   }
                 }));
-
-                console.log('Action loginUser dispatchée avec l\'utilisateur :', userResponse);
+                
+                    this.router.navigate(['/profile']); 
               },
               error: (error) => {
                 console.error("Erreur lors de la récupération des données de l'utilisateur :", error);
@@ -107,7 +113,42 @@ export class Authcomponent implements OnInit {
       const registerData = this.registerForm.value;
       this.apiService.postData('auth/register', registerData).subscribe({
         next: (response) => {
-          console.log('Inscription réussie :', response);
+           sessionStorage.setItem('token', response.access_token);
+          this.apiService.getDataWithToken('auth').subscribe({
+            next: (userResponse) => {
+              console.log(userResponse);
+              this.store.dispatch(loginUser({
+                user: {
+                  id: userResponse.id,
+                  firstName: userResponse.firstName, 
+                  lastName: userResponse.lastName, 
+                  birthDate: userResponse.birthDate, 
+                  photoProfile: userResponse.photoProfile,
+                  linkId: userResponse.linkId,
+                  email: userResponse.email,
+                  phone: userResponse.phone, 
+                  address: userResponse.address, 
+                  website: userResponse.website, 
+                  github: userResponse.github, 
+                  linkedin: userResponse.linkedin, 
+                  vehicle: userResponse.vehicle, 
+                  role: userResponse.role,
+                  drivingLicenses: userResponse.drivingLicenses, 
+                  socialLinks: userResponse.socialLinks, 
+                  languages: userResponse.languages, 
+                  skills: userResponse.skills, 
+                  experiences: userResponse.experiences, 
+                  educations: userResponse.educations 
+                }
+              }));
+              
+              console.log('Action loginUser dispatchée avec l\'utilisateur :', userResponse);
+              this.router.navigate(['/profile']); 
+            },
+            error: (error) => {
+              console.error("Erreur lors de la récupération des données de l'utilisateur :", error);
+            },
+          });
         },
         error: (error) => {
           console.error("Erreur lors de l'inscription :", error);

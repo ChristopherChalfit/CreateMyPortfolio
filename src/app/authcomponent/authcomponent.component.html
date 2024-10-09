@@ -17,7 +17,14 @@
           <input id="password" formControlName="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#102d66] focus:border-[#102d66] focus:z-10 sm:text-sm" placeholder="Mot de passe">
         </div>
       </div>
-
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <input id="rememberMe" type="checkbox" formControlName="rememberMe" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+          <label for="rememberMe" class="ml-2 block text-sm text-gray-900">
+            Se souvenir de moi
+          </label>
+        </div>
+      </div>
       <div>
         <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#102d66] hover:bg-[#0e254f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#102d66]">
           Se connecter
@@ -36,8 +43,12 @@
     <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit($event)" class="mt-8 space-y-6">
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
-          <label for="name" class="sr-only">Nom</label>
-          <input id="name" formControlName="name" type="text" autocomplete="name" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Nom">
+          <label for="firstName" class="sr-only">Nom</label>
+          <input id="firstName" formControlName="firstName" type="text" autocomplete="firstName" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Nom">
+        </div>
+        <div>
+          <label for="lastName" class="sr-only">Prénom</label>
+          <input id="lastName" formControlName="lastName" type="text" autocomplete="lastName" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Prenom">
         </div>
         <div>
           <label for="email-address-register" class="sr-only">Adresse e-mail</label>

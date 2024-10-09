@@ -10,6 +10,7 @@ export interface User {
     lastName: string | null;  
     birthDate: string | null;  
     email: string;
+    linkId: string | null;
     photoProfile: string;
     phone: string | null;  
     address: string | null;  
@@ -68,7 +69,7 @@ export interface Experience {
 export interface Education {
     id: string;
     diplome: string;
-    field: string;
+    description: string;
     school: string;
     startDate: string;
     endDate: string;

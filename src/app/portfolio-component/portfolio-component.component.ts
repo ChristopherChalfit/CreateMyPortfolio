@@ -8,7 +8,8 @@ import { User, UserState, selectUser } from '../store/auth/auth-reducer';
 import { ApiService } from '../api-service.service';
 import { loginUser } from '../store/auth/auth-action';
 import { getPortfolio } from '../store/portfolio/portfolio-action';
-import { PortfolioState, selectPortfolio } from '../store/portfolio/portfolio-reducer';
+import { Portfolio, PortfolioState, selectPortfolio } from '../store/portfolio/portfolio-reducer';
+import { DateFormatService } from '../date-format.service';
 
 @Component({
   selector: 'app-portfolio-component',
@@ -19,9 +20,9 @@ import { PortfolioState, selectPortfolio } from '../store/portfolio/portfolio-re
   
 })
 export class PortfolioComponent implements OnInit {
-  user$: Observable<User | null>;
+  user$: Observable<Portfolio | null>;
   userId: string | null = null;
-  constructor(private route: ActivatedRoute,private router: Router, private store: Store<PortfolioState>,private apiService: ApiService) {
+  constructor(private route: ActivatedRoute,private router: Router, private store: Store<PortfolioState>,private apiService: ApiService, private dateService: DateFormatService) {
     this.user$ = this.store.select(selectPortfolio);
   }
 
@@ -29,7 +30,7 @@ export class PortfolioComponent implements OnInit {
   ngOnInit(): void {
     const username = 'some-username';
     this.userId = this.route.snapshot.paramMap.get('id');
-    this.apiService.getData(`user/${this.userId}`).subscribe({
+    this.apiService.getData(`user/name/${this.userId}`).subscribe({
       next: (userResponse) => {
         console.log(userResponse);
         this.store.dispatch(getPortfolio({
@@ -37,7 +38,7 @@ export class PortfolioComponent implements OnInit {
             id: userResponse.id,
             firstName: userResponse.firstName, 
             lastName: userResponse.lastName, 
-            birthDate: userResponse.birthDate, 
+            birthDate: this.dateService.formatDate(userResponse.birthDate), 
             email: userResponse.email,
             photoProfile: userResponse.photoProfile,
             phone: userResponse.phone, 

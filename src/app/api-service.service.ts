@@ -18,11 +18,14 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/${url}`,data);
   }
   getDataWithToken(url:string): Observable<any> {
-    const token = localStorage.getItem('token');
-
-  
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
     return this.http.get(`${this.apiUrl}/${url}`, { headers });
   }
+  postDataWithToken(url:string, data: string): Observable<any> {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.apiUrl}/${url}`,data, { headers });
+  }
+  
 }

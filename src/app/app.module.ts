@@ -7,8 +7,13 @@ import {
   isDevMode,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { provideRouter, RouterModule, RouterOutlet } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  provideRouter,
+  RouterLink,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { appConfig } from './app.config';
@@ -28,14 +33,30 @@ import { ProfileComponent } from './profile/profile.component';
 import { PortfolionavbarComponent } from './portfolionavbar/portfolionavbar.component';
 import { PortfoliofooterComponent } from './portfoliofooter/portfoliofooter.component';
 import { portfolioReducer } from './store/portfolio/portfolio-reducer';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CommonModule } from '@angular/common';
+import { NgxEditorModule } from 'ngx-editor';
+import { ModalComponent } from './modal/modal.component';
 @NgModule({
-  declarations: [AppComponent, FooterComponent, NavbarComponent, ProfileComponent, PortfolionavbarComponent, PortfoliofooterComponent],
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    NavbarComponent,
+    ProfileComponent,
+    PortfolionavbarComponent,
+    PortfoliofooterComponent,
+    ModalComponent,
+  ],
   imports: [
+    NgxEditorModule,
     BrowserModule,
     ReactiveFormsModule,
+    RouterLink,
     RouterOutlet,
-    StoreModule.forRoot({user: userReducer, portfolio: portfolioReducer}),
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    StoreModule.forRoot({ user: userReducer, portfolio: portfolioReducer }),
     RouterModule.forRoot(routes),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -58,6 +79,7 @@ import { portfolioReducer } from './store/portfolio/portfolio-reducer';
       traceLimit: 75,
       connectInZone: true,
     }),
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

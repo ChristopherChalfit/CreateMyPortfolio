@@ -81,7 +81,7 @@
         <a routerLink="/profile">Profile {{ (user$ | async)?.firstName }}</a>
       </li>
       <li>
-        <a>Déconnection</a>
+        <a (click)="logout()" routerLink="/auth">Déconnection</a>
       </li>
     </ul>
   </ng-template>

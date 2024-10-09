@@ -1,13 +1,20 @@
 <section class="hero bg-[#102d66] text-[#fffffa] py-8 md:py-16 rounded-[0.5rem]">
     <div class="container mx-auto text-center px-4">
         <h1 class="text-2xl md:text-4xl font-bold mb-4">Profil de l'Utilisateur</h1>
+        <p>
+            Votre URL portfolio : 
+            <a [routerLink]="['../', (user$ | async)?.linkId]" class="text-emerald-500 font-bold">
+              http://createmyportfolio.com/{{ (user$ | async)?.linkId }}
+            </a>
+          </p>
         <p class="text-lg md:text-xl mb-8">Voici vos informations personnelles</p>
     </div>
 </section>
 
 <section class="profile-info py-8 md:py-16">
     <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Informations Personnelles</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Informations Personnelles  <button (click)="openModale('informations')" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Modifier</button>
+        </h2>
         <div class="bg-base-100 p-6 rounded-lg shadow-lg">
             <p class="text-lg"><strong>Nom :</strong> {{ (user$ | async)?.lastName }}</p>
             <p class="text-lg"><strong>Prénom :</strong> {{ (user$ | async)?.firstName }}</p>
@@ -26,7 +33,8 @@
 
 <section class="skills-info py-8 md:py-16">
     <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Compétences</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Compétences  <button (click)="openModale('skills')" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Modifier</button>
+        </h2>
         <ul class="list-disc pl-5">
             <li *ngFor="let skill of (user$ | async)?.skills" class="text-lg">{{ skill.name }}</li>
         </ul>
@@ -35,9 +43,11 @@
 
 <section class="languages-info py-8 md:py-16">
     <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Langues</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Langues <button (click)="openModale('languages')" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Modifier</button></h2>
         <ul class="list-disc pl-5">
-            <li *ngFor="let language of (user$ | async)?.languages" class="text-lg">{{ language.name }} ({{ language.level }})</li>
+            <li *ngFor="let language of (user$ | async)?.languages" class="text-lg">
+                {{ language.name }} <span *ngIf="language.level">({{ language.level }})</span>
+            </li>
         </ul>
     </div>
 </section>
@@ -59,8 +69,9 @@
         <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Formations</h2>
         <ul class="list-disc pl-5">
             <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
-                <strong>{{ education.diplome }}</strong> en {{ education.field }} à {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate | date:'yyyy-MM-dd' }})
-            </li>
+              <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
+              <p>{{ education.description }}</p>
+          </li>
         </ul>
     </div>
 </section>
@@ -68,6 +79,20 @@
 <section class="hero bg-[#102d66] text-[#fffffa] py-8 md:py-16 rounded-[0.5rem]">
     <div class="container mx-auto text-center px-4">
         <h2 class="text-2xl md:text-3xl font-bold mb-4">Mettez à Jour Votre Profil</h2>
-        <button class="btn text-[#102d66] bg-white px-6 py-2 rounded-lg">Modifier les Informations</button>
+        <button class="btn text-[#102d66] bg-white px-6 py-2 rounded-lg">
+            Modifier les Informations
+        </button>
     </div>
 </section>
+
+
+  <form #myForm="ngForm" [formGroup]="html"  (ngSubmit)="onSubmitTest()">
+    <div class="NgxEditor__Wrapper">
+      <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+      <ngx-editor [editor]="editor" formControlName="wysg" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  <app-modal [(visible)]="isModalVisible" [section]="activeSection" ></app-modal>
+
+  <div [innerHTML]="test"></div>

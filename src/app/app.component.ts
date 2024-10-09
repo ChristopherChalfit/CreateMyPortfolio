@@ -30,7 +30,8 @@ export class AppComponent implements OnInit {
     if (nonPortfolioRoutes.includes(urlSegment)) {
       return false;
     }
-    const userIdPattern = /^[a-zA-Z0-9]+$/;
+    const userIdPattern = /^[a-zA-Z0-9\-]+$/;
+
     const isPortfolio = userIdPattern.test(urlSegment);
     return isPortfolio;
   }
