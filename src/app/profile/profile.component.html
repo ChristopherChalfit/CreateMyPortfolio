@@ -54,11 +54,11 @@
 
 <section class="experiences-info py-8 md:py-16">
     <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Expériences</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Expériences <button (click)="openModale('experiences')" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Modifier</button></h2>
         <ul class="list-disc pl-5">
             <li *ngFor="let experience of (user$ | async)?.experiences" class="text-lg">
                 <strong>{{ experience.title }}</strong> chez {{ experience.company }} ({{ experience.startDate | date:'yyyy-MM-dd' }} - {{ experience.endDate ? (experience.endDate | date:'yyyy-MM-dd') : 'présent' }})
-                <p>{{ experience.description }}</p>
+                <p [innerHTML]="experience.description"></p>
             </li>
         </ul>
     </div>

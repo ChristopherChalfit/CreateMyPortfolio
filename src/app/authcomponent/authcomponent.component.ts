@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { selectUser, User, UserState } from '../store/auth/auth-reducer';
 import { Store } from '@ngrx/store';
 import { loginUser } from '../store/auth/auth-action';
-import { Router } from '@angular/router'; // Ajout de l'importation du Router
+import { Router } from '@angular/router'; 
 import { DateFormatService } from '../date-format.service';
 
 @Component({

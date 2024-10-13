@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { User, UserState, selectUser } from '../store/auth/auth-reducer';
 import { ApiService } from '../api-service.service';
 import { DateFormatService } from '../date-format.service';
 import { loginUser } from '../store/auth/auth-action';
+import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.sass'],
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit  , OnDestroy{
   @Input() visible = false;
   @Input() section: string = '';
   @Output() visibleChange = new EventEmitter<boolean>();
@@ -20,15 +21,21 @@ export class ModalComponent implements OnInit {
   editInfoPerso!: FormGroup;
   editSkills!: FormGroup;
   editLanguages!: FormGroup;
+  editExperiences!: FormGroup;
+  editors: Editor[] = []; 
   constructor(
     private store: Store<UserState>,
     private fb: FormBuilder,
     private apiService: ApiService,
     private dateService: DateFormatService
+    
   ) {
     this.user$ = this.store.select(selectUser);
+    this.editors.push(new Editor()); 
   }
-
+  ngOnDestroy(): void {
+    this.editors.forEach(editor => editor.destroy());
+  }
   ngOnInit(): void {
     this.editInfoPerso = this.fb.group({
       firstName: ['', Validators.required],
@@ -48,6 +55,9 @@ export class ModalComponent implements OnInit {
     });
     this.editLanguages = this.fb.group({
       languages: this.fb.array([]),
+    });
+    this.editExperiences = this.fb.group({
+      experiences: this.fb.array([]),
     });
     this.user$.subscribe((user) => {
       if (user) {
@@ -81,6 +91,20 @@ export class ModalComponent implements OnInit {
             })
           );
         });
+        const experiencesArray = this.editExperiences.get('experiences') as FormArray;
+       experiencesArray.clear();
+        user.experiences.forEach((experiences) => {
+          experiencesArray.push(
+            this.fb.group({
+              title: [experiences.title, Validators.required],
+              company: [experiences.company, Validators.required],              
+              location: [experiences.location, Validators.required],              
+              startDate: [experiences.startDate, Validators.required],                   
+              endDate: [experiences.startDate, Validators.required],
+              description: [experiences.description, Validators.required],
+            })
+          );
+        });
       }
     });
   }
@@ -91,6 +115,9 @@ export class ModalComponent implements OnInit {
 
   get languages(): FormArray {
     return this.editLanguages.get('languages') as FormArray;
+  }
+  get experiences(): FormArray{
+    return this.editExperiences.get('experiences') as FormArray;
   }
   addInfo(section: string) {
     if (section === 'skills') {
@@ -105,6 +132,18 @@ export class ModalComponent implements OnInit {
           name: ['', Validators.required],
         })
       );
+    }else if(section==="experiences"){
+      this.experiences.push(
+        this.fb.group({
+          title: ['', Validators.required],
+          company: ['', Validators.required],              
+          location: ['', Validators.required],              
+          startDate: ['', Validators.required],                   
+          endDate: ['', Validators.required],
+          description: ['', Validators.required],
+        })
+      );
+      this.editors.push(new Editor());
     }
   }
 
@@ -113,6 +152,10 @@ export class ModalComponent implements OnInit {
       this.skills.removeAt(index);
     }else if (section==="languages"){
       this.languages.removeAt(index);
+    }else if(section=== "experiences"){
+      this.experiences.removeAt(index);
+      this.editors[index].destroy(); 
+      this.editors.splice(index, 1);
     }
   }
 
@@ -230,6 +273,36 @@ export class ModalComponent implements OnInit {
                         user: {
                           ...userResponse,
                           languages: userResponse.languages,
+                        },
+                      })
+                    );
+                  });
+              },
+              error: (error) =>
+                console.error(
+                  'Erreur lors de la mise à jour des compétences:',
+                  error
+                ),
+            });
+        }
+      });
+    }else if(section=== 'experiences'){
+      const updatedExperiences = this.editExperiences.value.experiences;
+
+      this.user$.pipe(take(1)).subscribe((user) => {
+        if (user) {
+          this.apiService
+            .postDataWithToken(`user/${user.id}/experiences`, updatedExperiences)
+            .subscribe({
+              next: (response) => {
+                this.apiService
+                  .getDataWithToken(`user/${user.id}`)
+                  .subscribe((userResponse) => {
+                    this.store.dispatch(
+                      loginUser({
+                        user: {
+                          ...userResponse,
+                          experiences: userResponse.experiences,
                         },
                       })
                     );

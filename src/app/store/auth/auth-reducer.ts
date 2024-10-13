@@ -27,7 +27,6 @@ export interface User {
     educations: Education[];  
 }
 
-// Définir les nouvelles interfaces
 export interface DrivingLicense {
     id: string;
     type: string;

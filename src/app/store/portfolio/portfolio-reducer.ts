@@ -26,7 +26,6 @@ export interface Portfolio {
     educations: Education[];  
 }
 
-// Définir les nouvelles interfaces
 export interface DrivingLicense {
     id: string;
     type: string;

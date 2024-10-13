@@ -163,6 +163,66 @@
               </div>
             </div>
           </div>
+          <div *ngIf="section === 'experiences'" id="editExperiencesModal" class="flex fixed inset-0 z-50 bg-black bg-opacity-50 justify-center items-center" (click)="close()">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 sm:mx-auto max-h-[80vh] sm:max-h-screen overflow-y-auto" (click)="$event.stopPropagation()">
+                <div class="modal-header flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold mb-4">Modifier les Expériences</h3>
+                    <button type="button" class="text-gray-500 text-2xl" (click)="close()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="editExperiences" (ngSubmit)="saveChanges('experiences')">
+                        <div formArrayName="experiences"> 
+                            <div *ngFor="let experience of experiences.controls; let i = index" [formGroupName]="i" class="mb-4">
+                                <label for="title-{{i}}" class="form-label">Titre</label>
+                                <input 
+                                    type="text" 
+                                    id="title-{{i}}" 
+                                    formControlName="title" 
+                                    class="form-control border border-gray-300 rounded p-2 w-full">
+                                
+                                <label for="company-{{i}}" class="form-label">Entreprise</label>
+                                <input 
+                                    type="text" 
+                                    id="company-{{i}}" 
+                                    formControlName="company" 
+                                    class="form-control border border-gray-300 rounded p-2 w-full">
+                                
+                                <label for="location-{{i}}" class="form-label">Localisation</label>
+                                <input 
+                                    type="text" 
+                                    id="location-{{i}}" 
+                                    formControlName="location" 
+                                    class="form-control border border-gray-300 rounded p-2 w-full">
+                                
+                                <label for="startDate-{{i}}" class="form-label">Date de début</label>
+                                <input 
+                                    type="date" 
+                                    id="startDate-{{i}}" 
+                                    formControlName="startDate" 
+                                    class="form-control border border-gray-300 rounded p-2 w-full">
+                                
+                                <label for="endDate-{{i}}" class="form-label">Date de fin</label>
+                                <input 
+                                    type="date" 
+                                    id="endDate-{{i}}" 
+                                    formControlName="endDate" 
+                                    class="form-control border border-gray-300 rounded p-2 w-full">
+                                
+                                <label for="description-{{i}}" class="form-label">Description</label>
+                                <div class="NgxEditor__Wrapper">
+                                  <ngx-editor-menu [editor]="editors[i]"></ngx-editor-menu>
+                                  <ngx-editor id="description-{{i}}" [editor]="editors[i]" formControlName="description" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+                                </div>
+                              
+                                <button type="button" class="text-red-500" (click)="removeInfo('experiences',i)">Supprimer</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary w-full bg-gray-400 text-white py-2 rounded mb-4" (click)="addInfo('experiences')">Ajouter une expérience</button>
+                        <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
       <div class="flex justify-end">
         <button (click)="saveChanges(section)" class="bg-blue-500 text-white px-4 py-2 rounded">Enregistrer</button>
         <button (click)="close()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Annuler</button>

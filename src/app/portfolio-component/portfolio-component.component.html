@@ -49,7 +49,7 @@
         <ul class="list-disc pl-5">
             <li *ngFor="let experience of (user$ | async)?.experiences" class="text-lg">
                 <strong>{{ experience.title }}</strong> chez {{ experience.company }} ({{ experience.startDate | date:'yyyy-MM-dd' }} - {{ experience.endDate ? (experience.endDate | date:'yyyy-MM-dd') : 'présent' }})
-                <p>{{ experience.description }}</p>
+                <p [innerHTML]="experience.description"></p>
             </li>
         </ul>
     </div>
