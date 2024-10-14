@@ -66,11 +66,11 @@
 
 <section class="educations-info py-8 md:py-16">
     <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Formations</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Formations <button (click)="openModale('formations')" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Modifier</button></h2>
         <ul class="list-disc pl-5">
             <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
               <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
-              <p>{{ education.description }}</p>
+              <p [innerHTML]="education.description"></p>
           </li>
         </ul>
     </div>
@@ -84,15 +84,4 @@
         </button>
     </div>
 </section>
-
-
-  <form #myForm="ngForm" [formGroup]="html"  (ngSubmit)="onSubmitTest()">
-    <div class="NgxEditor__Wrapper">
-      <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-      <ngx-editor [editor]="editor" formControlName="wysg" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
-  <app-modal [(visible)]="isModalVisible" [section]="activeSection" ></app-modal>
-
-  <div [innerHTML]="test"></div>
+<app-modal [(visible)]="isModalVisible" [section]="activeSection" ></app-modal>

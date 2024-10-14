@@ -17,9 +17,6 @@ import { Editor } from 'ngx-editor';
 })
 export class ProfileComponent implements OnInit , OnDestroy  {
   user$: Observable<User | null>;
-  editor: Editor;
-  html!: FormGroup;
-  test!: string
   isModalVisible = false;
   activeSection = '';
 
@@ -30,22 +27,13 @@ export class ProfileComponent implements OnInit , OnDestroy  {
   }
   constructor(private fb: FormBuilder, private store: Store<UserState>, private apiService: ApiService, private dateService: DateFormatService) {
     this.user$ = this.store.select(selectUser);
-    this.editor = new Editor();
   }
   ngOnDestroy(): void {
-    this.editor.destroy();
+
   }
   ngOnInit(): void {
-    this.editor = new Editor();
-    this.html = this.fb.group({
-      wysg : ['', Validators.required]
-    })
-
-
+ 
   }
-  onSubmitTest(){
-   console.log(this.html.value);
-   this.test = this.html.get('wysg')?.value;;
-  }
+  
 
 }

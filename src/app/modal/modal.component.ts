@@ -6,7 +6,7 @@ import { User, UserState, selectUser } from '../store/auth/auth-reducer';
 import { ApiService } from '../api-service.service';
 import { DateFormatService } from '../date-format.service';
 import { loginUser } from '../store/auth/auth-action';
-import { Editor } from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 
 @Component({
   selector: 'app-modal',
@@ -22,7 +22,21 @@ export class ModalComponent implements OnInit  , OnDestroy{
   editSkills!: FormGroup;
   editLanguages!: FormGroup;
   editExperiences!: FormGroup;
+  editFormations!: FormGroup;
   editors: Editor[] = []; 
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['horizontal_rule', 'format_clear', 'indent', 'outdent'],
+    ['superscript', 'subscript'],
+    ['undo', 'redo'],
+  ];
   constructor(
     private store: Store<UserState>,
     private fb: FormBuilder,
@@ -58,6 +72,9 @@ export class ModalComponent implements OnInit  , OnDestroy{
     });
     this.editExperiences = this.fb.group({
       experiences: this.fb.array([]),
+    });
+    this.editFormations = this.fb.group({
+      formations: this.fb.array([]),
     });
     this.user$.subscribe((user) => {
       if (user) {
@@ -105,6 +122,20 @@ export class ModalComponent implements OnInit  , OnDestroy{
             })
           );
         });
+
+        const formationsArray = this.editFormations.get('formations') as FormArray;
+        formationsArray.clear();
+        user.educations.forEach((formation) => {
+          formationsArray.push(
+            this.fb.group({
+              diplome: [formation.diplome, Validators.required],
+              description: [formation.description, Validators.required],              
+              school: [formation.school, Validators.required],              
+              startDate: [formation.startDate, Validators.required],                   
+              endDate: [formation.startDate, Validators.required],
+            })
+          );
+        });
       }
     });
   }
@@ -118,6 +149,9 @@ export class ModalComponent implements OnInit  , OnDestroy{
   }
   get experiences(): FormArray{
     return this.editExperiences.get('experiences') as FormArray;
+  }
+  get formations(): FormArray{
+    return this.editFormations.get('formations') as FormArray;
   }
   addInfo(section: string) {
     if (section === 'skills') {
@@ -144,6 +178,17 @@ export class ModalComponent implements OnInit  , OnDestroy{
         })
       );
       this.editors.push(new Editor());
+    }else if (section === 'formations'){
+      this.formations.push(
+        this.fb.group({
+          diplome: ['', Validators.required],
+          description: ['', Validators.required],              
+          school: ['', Validators.required],              
+          startDate: ['', Validators.required],                   
+          endDate: ['', Validators.required],
+        })
+      );
+      this.editors.push(new Editor());
     }
   }
 
@@ -154,6 +199,10 @@ export class ModalComponent implements OnInit  , OnDestroy{
       this.languages.removeAt(index);
     }else if(section=== "experiences"){
       this.experiences.removeAt(index);
+      this.editors[index].destroy(); 
+      this.editors.splice(index, 1);
+    }else if(section === 'formations'){
+      this.formations.removeAt(index);
       this.editors[index].destroy(); 
       this.editors.splice(index, 1);
     }
@@ -303,6 +352,36 @@ export class ModalComponent implements OnInit  , OnDestroy{
                         user: {
                           ...userResponse,
                           experiences: userResponse.experiences,
+                        },
+                      })
+                    );
+                  });
+              },
+              error: (error) =>
+                console.error(
+                  'Erreur lors de la mise à jour des compétences:',
+                  error
+                ),
+            });
+        }
+      });
+    }else if(section=== 'formations'){
+      const updatedFormations = this.editFormations.value.formations;
+
+      this.user$.pipe(take(1)).subscribe((user) => {
+        if (user) {
+          this.apiService
+            .postDataWithToken(`user/${user.id}/formations`, updatedFormations)
+            .subscribe({
+              next: (response) => {
+                this.apiService
+                  .getDataWithToken(`user/${user.id}`)
+                  .subscribe((userResponse) => {
+                    this.store.dispatch(
+                      loginUser({
+                        user: {
+                          ...userResponse,
+                          educations: userResponse.educations,
                         },
                       })
                     );
