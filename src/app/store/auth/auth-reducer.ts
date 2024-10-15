@@ -12,6 +12,7 @@ export interface User {
     email: string;
     linkId: string | null;
     photoProfile: string;
+    description: string ;
     phone: string | null;  
     address: string | null;  
     website: string | null;  

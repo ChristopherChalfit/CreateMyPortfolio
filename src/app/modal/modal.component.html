@@ -107,6 +107,13 @@
                       [value]="(user$ | async)?.vehicle" 
                       required>
                   </div>
+             
+                    <label for="description" class="form-label">Description</label>
+                    <div class="NgxEditor__Wrapper">
+                      <ngx-editor-menu [editor]="editor"  [toolbar]="toolbar"></ngx-editor-menu>
+                      <ngx-editor id="description" [editor]="editor" formControlName="description" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+                    </div>
+                  
                   <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded">Enregistrer</button>
                 </form>
               </div>

@@ -11,6 +11,7 @@ export interface Portfolio {
     birthDate: string | null;  
     email: string;
     photoProfile: string;
+    description: string;
     phone: string | null;  
     address: string | null;  
     website: string | null;  
@@ -67,7 +68,7 @@ export interface Experience {
 export interface Education {
     id: string;
     diplome: string;
-    field: string;
+    description: string;
     school: string;
     startDate: string;
     endDate: string;

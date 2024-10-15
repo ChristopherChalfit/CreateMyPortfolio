@@ -23,11 +23,13 @@
             <p class="text-lg"><strong>Date de Naissance :</strong> {{ (user$ | async)?.birthDate }}</p>
             <p class="text-lg"><strong>Adresse :</strong> {{ (user$ | async)?.address }}</p>
             <p class="text-lg"><strong>Site Web :</strong> {{ (user$ | async)?.website }}</p>
-            <p class="text-lg"><strong>GitHub :</strong> {{ (user$ | async)?.github }}</p>
+            <p class="text-lg"><strong>GitHub :</strong> <a href="{{ (user$ | async)?.github }}" target="_blank">{{ (user$ | async)?.github }}</a></p>
             <p class="text-lg"><strong>LinkedIn :</strong> {{ (user$ | async)?.linkedin }}</p>
             <p class="text-lg"><strong>Véhicule :</strong> {{ (user$ | async)?.vehicle }}</p>
             <p class="text-lg"><strong>Rôle :</strong> {{ (user$ | async)?.role }}</p>
-        </div>
+            <p class="text-lg"><strong>Description :</strong></p>
+            <p [innerHTML]="(user$ | async)?.description"></p>
+    </div>
     </div>
 </section>
 

@@ -22,13 +22,30 @@ import { DateFormatService } from '../date-format.service';
 export class PortfolioComponent implements OnInit {
   user$: Observable<Portfolio | null>;
   userId: string | null = null;
+  isMenuOpen = false;
+  isMobile = false;
+  selectedSection: string = 'info'; 
+
   constructor(private route: ActivatedRoute,private router: Router, private store: Store<PortfolioState>,private apiService: ApiService, private dateService: DateFormatService) {
     this.user$ = this.store.select(selectPortfolio);
   }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
+  selectSection(section: string) {
+    this.selectedSection = section;
+    this.isMenuOpen = false; // Ferme le menu après sélection sur mobile
+    this.scrollToSection(section); // Appelle la méthode de défilement
 
+  }
+  scrollToSection(section: string) {
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' }); // Défilement en douceur vers la section
+    }
+  }
   ngOnInit(): void {
-    const username = 'some-username';
     this.userId = this.route.snapshot.paramMap.get('id');
     this.apiService.getData(`user/name/${this.userId}`).subscribe({
       next: (userResponse) => {
@@ -41,6 +58,7 @@ export class PortfolioComponent implements OnInit {
             birthDate: this.dateService.formatDate(userResponse.birthDate), 
             email: userResponse.email,
             photoProfile: userResponse.photoProfile,
+            description: userResponse.deescription,
             phone: userResponse.phone, 
             address: userResponse.address, 
             website: userResponse.website, 

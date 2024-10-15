@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit{
               lastName: userResponse.lastName, 
               birthDate: this.dateService.formatDate(userResponse.birthDate),
               photoProfile: userResponse.photoProfile,
+              description: userResponse.description,
               linkId: userResponse.linkId,
               email: userResponse.email,
               phone: userResponse.phone, 

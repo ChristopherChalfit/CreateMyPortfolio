@@ -24,6 +24,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
   editExperiences!: FormGroup;
   editFormations!: FormGroup;
   editors: Editor[] = []; 
+  editor: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -45,7 +46,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
     
   ) {
     this.user$ = this.store.select(selectUser);
-    this.editors.push(new Editor()); 
+    this.editor = new Editor();
   }
   ngOnDestroy(): void {
     this.editors.forEach(editor => editor.destroy());
@@ -62,8 +63,10 @@ export class ModalComponent implements OnInit  , OnDestroy{
       github: ['', Validators.required],
       linkedin: ['', Validators.required],
       vehicle: ['', Validators.required],
+      description: ['', Validators.required], 
+      
     });
-
+    this.editor = new Editor();
     this.editSkills = this.fb.group({
       skills: this.fb.array([]),
     });
@@ -89,6 +92,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
           github: user.github,
           linkedin: user.linkedin,
           vehicle: user.vehicle,
+          description: user.description,
         });
         const skillsArray = this.editSkills.get('skills') as FormArray;
         skillsArray.clear();
@@ -216,7 +220,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
     console.log(section);
     if (section === 'informations') {
       if (this.editInfoPerso.valid) {
-        const updatedUser = this.editInfoPerso.value;
+        const updatedUser = this.editInfoPerso.value;        
         this.close();
         this.user$.pipe(take(1)).subscribe((user) => {
           if (user) {
@@ -239,6 +243,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
                                   userResponse.birthDate
                                 ),
                                 photoProfile: userResponse.photoProfile,
+                                description: userResponse.description,
                                 linkId: userResponse.linkId,
                                 email: userResponse.email,
                                 phone: userResponse.phone,
@@ -367,7 +372,6 @@ export class ModalComponent implements OnInit  , OnDestroy{
       });
     }else if(section=== 'formations'){
       const updatedFormations = this.editFormations.value.formations;
-
       this.user$.pipe(take(1)).subscribe((user) => {
         if (user) {
           this.apiService

@@ -60,8 +60,9 @@
         <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Formations</h2>
         <ul class="list-disc pl-5">
             <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
-                <strong>{{ education.diplome }}</strong> en {{ education.field }} à {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate | date:'yyyy-MM-dd' }})
-            </li>
+              <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
+              <p [innerHTML]="education.description"></p>
+          </li>
         </ul>
     </div>
 </section>
