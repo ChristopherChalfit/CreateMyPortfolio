@@ -1,7 +1,5 @@
-<main class="main px-16 bg-[#fffffa] text-[#102d66] flex flex-col gap-4">
+<main class="main bg-[#fffffa] text-[#102d66] flex flex-col" [ngClass]="isPortfolioRoute ? 'px-0 gap-0' : 'px-16 gap-4'">
   <app-navbar *ngIf="!isPortfolioRoute"></app-navbar>
-  <app-portfolionavbar *ngIf="isPortfolioRoute"></app-portfolionavbar>
   <router-outlet></router-outlet>
   <app-footer *ngIf="!isPortfolioRoute"></app-footer>
-  <app-portfoliofooter *ngIf="isPortfolioRoute"></app-portfoliofooter>
 </main>

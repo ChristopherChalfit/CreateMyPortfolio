@@ -3,12 +3,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User, UserState, selectUser } from '../store/auth/auth-reducer';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import { ApiService } from '../api-service.service';
-import { loginUser } from '../store/auth/auth-action';
-import { take } from 'rxjs/operators';
 import { DateFormatService } from '../date-format.service';
-import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +16,7 @@ export class ProfileComponent implements OnInit , OnDestroy  {
   user$: Observable<User | null>;
   isModalVisible = false;
   activeSection = '';
+  selectedFile: File | null = null;
 
   openModale(section: string) {
     this.activeSection = section;

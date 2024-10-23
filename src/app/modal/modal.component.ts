@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { User, UserState, selectUser } from '../store/auth/auth-reducer';
@@ -23,6 +23,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
   editLanguages!: FormGroup;
   editExperiences!: FormGroup;
   editFormations!: FormGroup;
+  editPhotoProfile!: FormGroup;
   editors: Editor[] = []; 
   editor: Editor;
   toolbar: Toolbar = [
@@ -38,6 +39,8 @@ export class ModalComponent implements OnInit  , OnDestroy{
     ['superscript', 'subscript'],
     ['undo', 'redo'],
   ];
+  selectedFile: File | null = null; 
+  imagePreview: string | null = null;
   constructor(
     private store: Store<UserState>,
     private fb: FormBuilder,
@@ -79,6 +82,9 @@ export class ModalComponent implements OnInit  , OnDestroy{
     this.editFormations = this.fb.group({
       formations: this.fb.array([]),
     });
+    this.editPhotoProfile = this.fb.group({
+      photo: [null]
+    })
     this.user$.subscribe((user) => {
       if (user) {
         this.editInfoPerso.patchValue({
@@ -211,7 +217,18 @@ export class ModalComponent implements OnInit  , OnDestroy{
       this.editors.splice(index, 1);
     }
   }
-
+  onFileSelected(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.selectedFile = target.files[0];
+      this.editPhotoProfile.patchValue({ photo: this.selectedFile }); 
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string; 
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
   close() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
@@ -396,6 +413,34 @@ export class ModalComponent implements OnInit  , OnDestroy{
                   'Erreur lors de la mise à jour des compétences:',
                   error
                 ),
+            });
+        }
+      });
+    }else if(section=== 'photoProfile'){
+      const formData = new FormData();
+      formData.append('photo', this.editPhotoProfile.get('photo')?.value)
+      this.user$.pipe(take(1)).subscribe((user) => {
+        if (user) {
+          this.apiService
+            .postDataWithToken(`user/${user.id}/photo`, formData as any)
+            .subscribe({
+              next: (response) => {
+                this.apiService
+                  .getDataWithToken(`user/${user.id}`)
+                  .subscribe((userResponse) => {
+                    this.store.dispatch(
+                      loginUser({
+                        user: {
+                          ...userResponse,
+                         },
+                      })
+                    );
+                    this.imagePreview = null;
+                  });
+              },
+              error: (error) => {
+                console.error('Erreur lors de la mise à jour de la photo de profil:', error);
+              },
             });
         }
       });

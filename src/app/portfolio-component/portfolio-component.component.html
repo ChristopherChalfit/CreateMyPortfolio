@@ -1,80 +1,60 @@
-<div *ngIf="user$ | async as user; else noUser">
-  <section class="hero bg-[#102d66] text-[#fffffa] py-8 md:py-16 rounded-[0.5rem]">
-    <div class="container mx-auto text-center px-4">
-        <h1 class="text-2xl md:text-4xl font-bold mb-4">Profil de l'Utilisateur</h1>
-        <p class="text-lg md:text-xl mb-8">Voici vos informations personnelles</p>
-    </div>
-</section>
-
-<section class="profile-info py-8 md:py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Informations Personnelles</h2>
-        <div class="bg-base-100 p-6 rounded-lg shadow-lg">
-            <p class="text-lg"><strong>Nom :</strong> {{ (user$ | async)?.lastName }}</p>
-            <p class="text-lg"><strong>Prénom :</strong> {{ (user$ | async)?.firstName }}</p>
-            <p class="text-lg"><strong>Email :</strong> {{ (user$ | async)?.email }}</p>
-            <p class="text-lg"><strong>Téléphone :</strong> {{ (user$ | async)?.phone }}</p>
-            <p class="text-lg"><strong>Date de Naissance :</strong> {{ (user$ | async)?.birthDate }}</p>
-            <p class="text-lg"><strong>Adresse :</strong> {{ (user$ | async)?.address }}</p>
-            <p class="text-lg"><strong>Site Web :</strong> {{ (user$ | async)?.website }}</p>
-            <p class="text-lg"><strong>GitHub :</strong> {{ (user$ | async)?.github }}</p>
-            <p class="text-lg"><strong>LinkedIn :</strong> {{ (user$ | async)?.linkedin }}</p>
-            <p class="text-lg"><strong>Véhicule :</strong> {{ (user$ | async)?.vehicle }}</p>
-            <p class="text-lg"><strong>Rôle :</strong> {{ (user$ | async)?.role }}</p>
-        </div>
-    </div>
-</section>
-
-<section class="skills-info py-8 md:py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Compétences</h2>
-        <ul class="list-disc pl-5">
-            <li *ngFor="let skill of (user$ | async)?.skills" class="text-lg">{{ skill.name }}</li>
-        </ul>
-    </div>
-</section>
-
-<section class="languages-info py-8 md:py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Langues</h2>
-        <ul class="list-disc pl-5">
-            <li *ngFor="let language of (user$ | async)?.languages" class="text-lg">{{ language.name }} ({{ language.level }})</li>
-        </ul>
-    </div>
-</section>
-
-<section class="experiences-info py-8 md:py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Expériences</h2>
-        <ul class="list-disc pl-5">
-            <li *ngFor="let experience of (user$ | async)?.experiences" class="text-lg">
-                <strong>{{ experience.title }}</strong> chez {{ experience.company }} ({{ experience.startDate | date:'yyyy-MM-dd' }} - {{ experience.endDate ? (experience.endDate | date:'yyyy-MM-dd') : 'présent' }})
-                <p [innerHTML]="experience.description"></p>
-            </li>
-        </ul>
-    </div>
-</section>
-
-<section class="educations-info py-8 md:py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Formations</h2>
-        <ul class="list-disc pl-5">
-            <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
-              <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
-              <p [innerHTML]="education.description"></p>
+<div class="flex h-screen">
+    <nav class="bg-gray-800 w-64 h-full fixed">
+      <ul class="space-y-4 mt-8 text-white text-lg flex flex-col items-center">
+        <p class="mt-4">CV</p>
+        <img  src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)]">
+        <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
+        <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
+        <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
+        <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
+      </ul>
+    </nav>
+    <div class="ml-64 flex-1 overflow-y-scroll">
+      <section id="section1" class="h-screen flex items-center justify-center flex-col">
+        <p *ngIf="(user$ | async)?.firstName && (user$ | async)?.lastName; else noDescription">
+          {{ (user$ | async)?.firstName }} {{ (user$ | async)?.lastName }}
+        </p>
+        <ng-template #noDescription>
+          <p>{{ noContent('description') }}</p>
+        </ng-template>
+        <p [innerHTML]="(user$ | async)?.description"></p>
+      </section>
+  
+      <section id="section2" class="h-screen flex items-center justify-center">
+        <ng-container *ngIf="(user$ | async)?.experiences?.length; else noExperience">
+          <li *ngFor="let experience of (user$ | async)?.experiences" class="text-lg">
+              <strong>{{ experience.title }}</strong> chez {{ experience.company }} ({{ experience.startDate | date:'yyyy-MM-dd' }} - {{ experience.endDate ? (experience.endDate | date:'yyyy-MM-dd') : 'présent' }})
+              <p [innerHTML]="experience.description"></p>
           </li>
-        </ul>
+        </ng-container>
+        <ng-template #noExperience>
+          <p>{{ noContent('expérience') }}</p>
+        </ng-template>
+      </section>
+  
+      <section id="section3" class="h-screen flex items-center justify-center">
+        <ng-container *ngIf="(user$ | async)?.educations?.length; else noEducation">
+          <ul class="list-disc pl-5">
+              <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
+                <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
+                <p [innerHTML]="education.description"></p>
+            </li>
+          </ul>
+        </ng-container>
+        <ng-template #noEducation>
+          <p>{{ noContent('formation') }}</p>
+        </ng-template>
+      </section>
+  
+      <section id="section4" class="h-screen flex items-center justify-center">
+        <ng-container *ngIf="(user$ | async)?.skills?.length; else noSkills">
+          <ul class="list-disc pl-5">
+              <li *ngFor="let skill of (user$ | async)?.skills" class="text-lg">{{ skill.name }}</li>
+          </ul>
+        </ng-container>
+        <ng-template #noSkills>
+          <p>{{ noContent('compétence') }}</p>
+        </ng-template>
+      </section>
     </div>
-</section>
-
-<section class="hero bg-[#102d66] text-[#fffffa] py-8 md:py-16 rounded-[0.5rem]">
-    <div class="container mx-auto text-center px-4">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">Mettez à Jour Votre Profil</h2>
-        <button class="btn text-[#102d66] bg-white px-6 py-2 rounded-lg">Modifier les Informations</button>
-    </div>
-</section>
-
 </div>
-<ng-template #noUser>
-  <p>Utilisateur inexistant</p>
-</ng-template>

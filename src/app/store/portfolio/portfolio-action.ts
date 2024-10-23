@@ -7,7 +7,6 @@ export const getPortfolio = createAction(
   );
   
  
-  // Action pour gérer une erreur de connexion
   export const errorPortfolio = createAction(
     "[Portfolio] Error Portfolio",
     props<{ error: string }>() 
