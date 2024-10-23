@@ -2,11 +2,12 @@
     <nav class="bg-gray-800 w-64 h-full fixed">
       <ul class="space-y-4 mt-8 text-white text-lg flex flex-col items-center">
         <p class="mt-4">CV</p>
-        <img  src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)]">
+        <img (click)="scrollToSection('section1')" src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)] object-cover">
         <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
         <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
         <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
         <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
+        <li><button (click)="scrollToSection('section5')" class="block py-2 px-4 hover:bg-gray-700">Langues</button></li>
       </ul>
     </nav>
     <div class="ml-64 flex-1 overflow-y-scroll">
@@ -54,6 +55,16 @@
         </ng-container>
         <ng-template #noSkills>
           <p>{{ noContent('compétence') }}</p>
+        </ng-template>
+      </section>
+      <section id="section5" class="h-screen flex items-center justify-center">
+        <ng-container *ngIf="(user$ | async)?.languages?.length; else noSkills">
+          <ul class="list-disc pl-5">
+              <li *ngFor="let language of (user$ | async)?.languages" class="text-lg">{{ language.name }}</li>
+          </ul>
+        </ng-container>
+        <ng-template #noSkills>
+          <p>{{ noContent('langues') }}</p>
         </ng-template>
       </section>
     </div>
