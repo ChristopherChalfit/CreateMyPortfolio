@@ -1,71 +1,100 @@
-<div class="flex h-screen">
-    <nav class="bg-gray-800 w-64 h-full fixed">
-      <ul class="space-y-4 mt-8 text-white text-lg flex flex-col items-center">
-        <p class="mt-4">CV</p>
-        <img (click)="scrollToSection('section1')" src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)] object-cover">
-        <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
-        <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
-        <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
-        <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
-        <li><button (click)="scrollToSection('section5')" class="block py-2 px-4 hover:bg-gray-700">Langues</button></li>
-      </ul>
-    </nav>
-    <div class="ml-64 flex-1 overflow-y-scroll">
-      <section id="section1" class="h-screen flex items-center justify-center flex-col">
-        <p *ngIf="(user$ | async)?.firstName && (user$ | async)?.lastName; else noDescription">
-          {{ (user$ | async)?.firstName }} {{ (user$ | async)?.lastName }}
-        </p>
-        <ng-template #noDescription>
-          <p>{{ noContent('description') }}</p>
-        </ng-template>
-        <p [innerHTML]="(user$ | async)?.description"></p>
-      </section>
+<div class="flex flex-col md:flex-row h-screen">
+  <div class="md:hidden z-50 h-min w-full flex justify-center pt-4">
+    <button
+      class="hover:text-gray-700 focus:outline-none focus:text-gray-700"
+      [ngClass]="menuOpen ? 'text-white' : 'text-gray-500'"
+      aria-label="Menu"
+      (click)="menuOpen = !menuOpen">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
   
-      <section id="section2" class="h-screen flex items-center justify-center">
-        <ng-container *ngIf="(user$ | async)?.experiences?.length; else noExperience">
-          <li *ngFor="let experience of (user$ | async)?.experiences" class="text-lg">
-              <strong>{{ experience.title }}</strong> chez {{ experience.company }} ({{ experience.startDate | date:'yyyy-MM-dd' }} - {{ experience.endDate ? (experience.endDate | date:'yyyy-MM-dd') : 'présent' }})
-              <p [innerHTML]="experience.description"></p>
+  <nav class="bg-gray-800 w-64 h-full fixed hidden md:flex items-center space-x-4">
+    <ul class="space-y-4 mt-8 text-white text-lg flex flex-col items-center w-full">
+      <p class="mt-4">CV</p>
+      <img (click)="scrollToSection('section1')" src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)] object-cover">
+      <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
+      <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
+      <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
+      <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
+      <li><button (click)="scrollToSection('section5')" class="block py-2 px-4 hover:bg-gray-700">Langues</button></li>
+    </ul>
+  </nav>
+  
+  <div
+    [class.block]="menuOpen"
+    [class.hidden]="!menuOpen"
+    class="md:hidden fixed top-0 left-0 w-full bg-gray-500 bg-opacity-70 z-10 flex flex-col items-center">
+    <ul class="space-y-4 mt-8 text-lg flex flex-col items-center text-white pb-4">
+      <p class="mt-4">CV</p>
+      <img (click)="scrollToSection('section1')" src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)] object-cover">
+      <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
+      <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
+      <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
+      <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
+      <li><button (click)="scrollToSection('section5')" class="block py-2 px-4 hover:bg-gray-700">Langues</button></li>
+    </ul>
+  </div>
+  
+  <div class="flex-1 overflow-y-scroll md:ml-64">
+    <section id="section1" class="h-screen flex items-center justify-center flex-col">
+      <p *ngIf="(user$ | async)?.firstName && (user$ | async)?.lastName; else noDescription">
+        {{ (user$ | async)?.firstName }} {{ (user$ | async)?.lastName }}
+      </p>
+      <ng-template #noDescription>
+        <p>{{ noContent('description') }}</p>
+      </ng-template>
+      <p [innerHTML]="(user$ | async)?.description"></p>
+    </section>
+  
+    <section id="section2" class="h-screen flex items-center justify-center">
+      <ng-container *ngIf="(user$ | async)?.experiences?.length; else noExperience">
+        <li *ngFor="let experience of (user$ | async)?.experiences" class="text-lg">
+          <strong>{{ experience.title }}</strong> chez {{ experience.company }} ({{ experience.startDate | date:'yyyy-MM-dd' }} - {{ experience.endDate ? (experience.endDate | date:'yyyy-MM-dd') : 'présent' }})
+          <p [innerHTML]="experience.description"></p>
+        </li>
+      </ng-container>
+      <ng-template #noExperience>
+        <p>{{ noContent('expérience') }}</p>
+      </ng-template>
+    </section>
+  
+    <section id="section3" class="h-screen flex items-center justify-center">
+      <ng-container *ngIf="(user$ | async)?.educations?.length; else noEducation">
+        <ul class="list-disc pl-5">
+          <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
+            <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
+            <p [innerHTML]="education.description"></p>
           </li>
-        </ng-container>
-        <ng-template #noExperience>
-          <p>{{ noContent('expérience') }}</p>
-        </ng-template>
-      </section>
+        </ul>
+      </ng-container>
+      <ng-template #noEducation>
+        <p>{{ noContent('formation') }}</p>
+      </ng-template>
+    </section>
   
-      <section id="section3" class="h-screen flex items-center justify-center">
-        <ng-container *ngIf="(user$ | async)?.educations?.length; else noEducation">
-          <ul class="list-disc pl-5">
-              <li *ngFor="let education of (user$ | async)?.educations" class="text-lg">
-                <strong>{{ education.diplome }}</strong> chez {{ education.school }} ({{ education.startDate | date:'yyyy-MM-dd' }} - {{ education.endDate ? (education.endDate | date:'yyyy-MM-dd') : 'présent' }})
-                <p [innerHTML]="education.description"></p>
-            </li>
-          </ul>
-        </ng-container>
-        <ng-template #noEducation>
-          <p>{{ noContent('formation') }}</p>
-        </ng-template>
-      </section>
+    <section id="section4" class="h-screen flex items-center justify-center">
+      <ng-container *ngIf="(user$ | async)?.skills?.length; else noSkills">
+        <ul class="list-disc pl-5">
+          <li *ngFor="let skill of (user$ | async)?.skills" class="text-lg">{{ skill.name }}</li>
+        </ul>
+      </ng-container>
+      <ng-template #noSkills>
+        <p>{{ noContent('compétence') }}</p>
+      </ng-template>
+    </section>
   
-      <section id="section4" class="h-screen flex items-center justify-center">
-        <ng-container *ngIf="(user$ | async)?.skills?.length; else noSkills">
-          <ul class="list-disc pl-5">
-              <li *ngFor="let skill of (user$ | async)?.skills" class="text-lg">{{ skill.name }}</li>
-          </ul>
-        </ng-container>
-        <ng-template #noSkills>
-          <p>{{ noContent('compétence') }}</p>
-        </ng-template>
-      </section>
-      <section id="section5" class="h-screen flex items-center justify-center">
-        <ng-container *ngIf="(user$ | async)?.languages?.length; else noSkills">
-          <ul class="list-disc pl-5">
-              <li *ngFor="let language of (user$ | async)?.languages" class="text-lg">{{ language.name }}</li>
-          </ul>
-        </ng-container>
-        <ng-template #noSkills>
-          <p>{{ noContent('langues') }}</p>
-        </ng-template>
-      </section>
-    </div>
+    <section id="section5" class="h-screen flex items-center justify-center">
+      <ng-container *ngIf="(user$ | async)?.languages?.length; else noLanguages">
+        <ul class="list-disc pl-5">
+          <li *ngFor="let language of (user$ | async)?.languages" class="text-lg">{{ language.name }}</li>
+        </ul>
+      </ng-container>
+      <ng-template #noLanguages>
+        <p>{{ noContent('langues') }}</p>
+      </ng-template>
+    </section>
+  </div>
 </div>

@@ -58,25 +58,12 @@
     [class.block]="menuOpen"
     [class.hidden]="!menuOpen"
     class="md:hidden flex-col">
-
-    <a [routerLink]="['./auth']" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+    <a [routerLink]="['./auth']" class="text-lg font-medium text-gray-700 hover:text-gray-900" *ngIf="!(user$ | async); else loggedInLinks" >
       Se Connecter / S'inscrire
-    </a>
-    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      Profile
-    </a>
-    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      View cart
-    </a>
-    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      Settings
-    </a>
-    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      Logout
     </a>
   </div>
   <ng-template #loggedInLinks>
-    <ul>
+    <ul class="flex flex-col md:flex-row gap-2">
       <li>
         <a routerLink="/profile">Profile {{ (user$ | async)?.firstName }}</a>
       </li>

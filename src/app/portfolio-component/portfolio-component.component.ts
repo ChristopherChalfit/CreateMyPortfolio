@@ -7,6 +7,7 @@ import { ApiService } from '../api-service.service';
 import { getPortfolio } from '../store/portfolio/portfolio-action';
 import { Portfolio, PortfolioState, selectPortfolio } from '../store/portfolio/portfolio-reducer';
 import { DateFormatService } from '../date-format.service';
+import { FaviconService } from '../faviconservice.service';
 
 @Component({
   selector: 'app-portfolio-component',
@@ -18,8 +19,9 @@ import { DateFormatService } from '../date-format.service';
 })
 export class PortfolioComponent implements OnInit {
   user$: Observable<Portfolio | null>;
+  menuOpen: any;
   userId: string | null = null;
-  constructor(private route: ActivatedRoute,private router: Router, private store: Store<PortfolioState>,private apiService: ApiService, private dateService: DateFormatService,private viewportScroller: ViewportScroller) {
+  constructor(private route: ActivatedRoute,private router: Router, private store: Store<PortfolioState>,private apiService: ApiService, private dateService: DateFormatService,private viewportScroller: ViewportScroller,private faviconService: FaviconService) {
     this.user$ = this.store.select(selectPortfolio);
   }
  
@@ -31,7 +33,10 @@ export class PortfolioComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    this.userId = this.route.snapshot.paramMap.get('id');
+    this.user$.subscribe(user => {
+      this.faviconService.changeFavicon(user?.photoProfile || './assets/logo.png'); 
+    });
+    this.userId = this.route.snapshot.paramMap.get('id') || ''; 
     this.apiService.getData(`user/name/${this.userId}`).subscribe({
       next: (userResponse) => {
         console.log(userResponse);
@@ -42,6 +47,7 @@ export class PortfolioComponent implements OnInit {
             lastName: userResponse.lastName, 
             birthDate: this.dateService.formatDate(userResponse.birthDate), 
             email: userResponse.email,
+            linkId: userResponse.linkId,
             photoProfile: userResponse.photoProfile,
             description: userResponse.description,
             phone: userResponse.phone, 
