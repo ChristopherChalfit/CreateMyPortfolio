@@ -1,0 +1,36 @@
+<app-toolbox></app-toolbox>
+<div
+  class="editor-container"
+  cdkDropList
+  id="editor"
+  [cdkDropListData]="editorBlocks"
+  [cdkDropListConnectedTo]="['toolbox']"
+  (cdkDropListDropped)="drop($event)"
+>
+<div class="layout-selector">
+  <button (click)="setLayout('column')">Disposition en colonne</button>
+  <button (click)="setLayout('row')">Disposition en ligne</button>
+</div>
+
+<div
+  class="editor-container"
+  [ngClass]="layout"
+  cdkDropList
+  id="editor"
+  [cdkDropListData]="editorBlocks"
+  [cdkDropListConnectedTo]="['toolbox']"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div
+    *ngFor="let block of editorBlocks; let i = index"
+    class="editor-block"
+    cdkDrag
+  >
+    <button class="delete-button" (click)="removeBlock(i)">✖</button>
+    
+    <!-- Affichage dynamique du composant -->
+    <ng-container *ngComponentOutlet="block.component; injector: createInjector(block.layout)"></ng-container>
+  </div>
+  <button (click)="savePortfolio()" class="mt-4 p-2 bg-blue-500 text-white">Enregistrer le Portfolio</button>
+</div>
+

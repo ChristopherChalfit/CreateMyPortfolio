@@ -1,0 +1,15 @@
+<div
+  cdkDropList
+  [cdkDropListData]="blocks" 
+  class="toolbox"
+  [cdkDropListConnectedTo]="['editor']"
+>
+  <div
+    *ngFor="let block of blocks"
+    class="toolbox-block"
+    cdkDrag
+    [cdkDragData]="block"
+  >
+    {{ block.label }}
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="md:hidden z-50 h-min w-full flex justify-center pt-4">
+    <button
+      class="hover:text-gray-700 focus:outline-none focus:text-gray-700"
+      [ngClass]="menuOpen ? 'text-white' : 'text-gray-500'"
+      aria-label="Menu"
+      (click)="menuOpen = !menuOpen">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+  
+  <nav [ngClass]="layout === 'column' ? 'flex flex-row justify-center w-full mb-4' : 'flex flex-col w-full pt-6'">
+    <ul [ngClass]="layout === 'column' ? 'flex flex-row justify-center w-full' : 'flex flex-col justify-between'">
+      <p class="mt-4">CV</p>
+      <img (click)="scrollToSection('section1')" src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)] object-cover">
+      <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
+      <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
+      <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
+      <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
+      <li><button (click)="scrollToSection('section5')" class="block py-2 px-4 hover:bg-gray-700">Langues</button></li>
+    </ul>
+  </nav>
+  
+  <div
+    [class.block]="menuOpen"
+    [class.hidden]="!menuOpen"
+    class="md:hidden fixed top-0 left-0 w-full bg-gray-500 bg-opacity-70 z-10 flex flex-col items-center">
+    <ul class="space-y-4 mt-8 text-lg flex flex-col items-center text-white pb-4">
+      <p class="mt-4">CV</p>
+      <img (click)="scrollToSection('section1')" src="{{ (user$ | async)?.photoProfile }}" alt="Photo de profil" class="w-32 h-32 rounded-full mb-4 border-[0.5rem] border-solid border-[rgba(255,255,255,0.2)] object-cover">
+      <li><button (click)="scrollToSection('section1')" class="block py-2 px-4 hover:bg-gray-700">Résumé</button></li>
+      <li><button (click)="scrollToSection('section2')" class="block py-2 px-4 hover:bg-gray-700">Expériences</button></li>
+      <li><button (click)="scrollToSection('section3')" class="block py-2 px-4 hover:bg-gray-700">Formations</button></li>
+      <li><button (click)="scrollToSection('section4')" class="block py-2 px-4 hover:bg-gray-700">Compétences</button></li>
+      <li><button (click)="scrollToSection('section5')" class="block py-2 px-4 hover:bg-gray-700">Langues</button></li>
+    </ul>
+  </div>
+  
