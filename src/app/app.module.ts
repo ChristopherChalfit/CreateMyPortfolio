@@ -16,12 +16,10 @@ import {
 } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { appConfig } from './app.config';
 import {
   provideStoreDevtools,
   StoreDevtoolsModule,
 } from '@ngrx/store-devtools';
-import { EffectsModule, provideEffects } from '@ngrx/effects';
 import {
   provideHttpClient,
   withFetch,
@@ -30,24 +28,31 @@ import {
 import { routes } from './app.routes';
 import { userReducer } from './store/auth/auth-reducer';
 import { ProfileComponent } from './profile/profile.component';
-import { PortfolionavbarComponent } from './portfolionavbar/portfolionavbar.component';
-import { PortfoliofooterComponent } from './portfoliofooter/portfoliofooter.component';
 import { portfolioReducer } from './store/portfolio/portfolio-reducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CommonModule } from '@angular/common';
 import { NgxEditorModule } from 'ngx-editor';
 import { ModalComponent } from './modal/modal.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ToolboxComponent } from './toolbox/toolbox.component';
+import { EditorComponent } from './editor/editor.component';
+import { NavbarPortfolioComponent } from './navbar-portfolio/navbar-portfolio.component';
+import { SectionPortfolioComponent } from './section-portfolio/section-portfolio.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     NavbarComponent,
     ProfileComponent,
-    PortfolionavbarComponent,
-    PortfoliofooterComponent,
     ModalComponent,
+    ToolboxComponent,
+    EditorComponent,
+    NavbarPortfolioComponent,
+    SectionPortfolioComponent
   ],
   imports: [
+    DragDropModule,
     NgxEditorModule.forRoot({
       locals: {
         // menu

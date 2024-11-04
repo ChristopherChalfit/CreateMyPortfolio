@@ -47,7 +47,7 @@
             </a>
           </li>
           <li><a>Paramètres</a></li>
-          <li><a>Déconnexion</a></li>
+          <li ><a (click)="logout()" routerLink="/auth">Déconnexion</a></li>
         </ul>
       </div>
     </div>
@@ -66,6 +66,9 @@
     <ul class="flex flex-col md:flex-row gap-2">
       <li>
         <a routerLink="/profile">Profile {{ (user$ | async)?.firstName }}</a>
+      </li>
+      <li>
+        <a routerLink="/edit">Edition</a>
       </li>
       <li>
         <a (click)="logout()" routerLink="/auth">Déconnection</a>

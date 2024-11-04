@@ -276,6 +276,7 @@ export class ModalComponent implements OnInit  , OnDestroy{
                                 skills: userResponse.skills,
                                 experiences: userResponse.experiences,
                                 educations: userResponse.educations,
+                                scriptPortfolio: userResponse.scriptPortfolio,
                               },
                             })
                           );

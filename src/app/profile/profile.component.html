@@ -36,7 +36,9 @@
             <p class="text-lg"><strong>GitHub :</strong> <a href="{{ (user$ | async)?.github }}" target="_blank">{{ (user$ | async)?.github }}</a></p>
             <p class="text-lg"><strong>LinkedIn :</strong> {{ (user$ | async)?.linkedin }}</p>
             <p class="text-lg"><strong>Véhicule :</strong> {{ (user$ | async)?.vehicle }}</p>
-            <p class="text-lg"><strong>Rôle :</strong> {{ (user$ | async)?.role }}</p>
+            <p class="text-lg"><strong>Rôle :</strong> {{ (user$ | async)?.role }} <img src="../assets/user/roles/{{ (user$ | async)?.role?.toLowerCase() }}.svg" 
+            alt="{{ (user$ | async)?.role?.toLowerCase() === 'admin' ? 'admin' : (user$ | async)?.role?.toLowerCase() === 'user' ? 'utilisateur' : (user$ | async)?.role?.toLowerCase() === 'premium' ? 'premium' : '' }}" 
+            class="w-8 h-8 inline ml-2"/></p>
             <p class="text-lg"><strong>Description :</strong></p>
             <p [innerHTML]="(user$ | async)?.description" class="break-words overflow-hidden text-ellipsis"></p>
     </div>

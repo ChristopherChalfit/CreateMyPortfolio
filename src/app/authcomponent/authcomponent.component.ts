@@ -84,7 +84,8 @@ export class Authcomponent implements OnInit {
                     languages: userResponse.languages, 
                     skills: userResponse.skills, 
                     experiences: userResponse.experiences, 
-                    educations: userResponse.educations 
+                    educations: userResponse.educations,
+                    scriptPortfolio: userResponse.scriptPortfolio,
                   }
                 }));
                 
@@ -140,7 +141,8 @@ export class Authcomponent implements OnInit {
                   languages: userResponse.languages, 
                   skills: userResponse.skills, 
                   experiences: userResponse.experiences, 
-                  educations: userResponse.educations 
+                  educations: userResponse.educations,
+                  scriptPortfolio: userResponse.scriptPortfolio,
                 }
               }));
               

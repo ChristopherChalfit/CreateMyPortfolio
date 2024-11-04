@@ -19,7 +19,8 @@ export interface Base {
     languages: Language[];  
     skills: Skill[];  
     experiences: Experience[];  
-    educations: Education[];  
+    educations: Education[];    
+    scriptPortfolio: string | null;
 }
 
 export interface DrivingLicense {
