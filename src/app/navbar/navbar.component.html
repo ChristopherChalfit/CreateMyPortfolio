@@ -24,16 +24,16 @@
     <!-- Menu en grand écran -->
     <nav class="hidden md:flex items-center space-x-4 w-full justify-end">
       <ol class="flex flex-row gap-4 uppercase">
-        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md" *ngIf="!(user$ | async); else loggedInLinks" >
+        <li> <a href="#" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md" *ngIf="!(user$ | async); else loggedInLinks" >
          accueil
         </a></li>
-        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        <li> <a href="#presentation" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
           présentation
         </a></li>
-        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        <li> <a href="#presentationStaff" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
           l'équipe
         </a></li>
-        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        <li> <a href="#modeles" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
           nos modèles
         </a></li>
         <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
