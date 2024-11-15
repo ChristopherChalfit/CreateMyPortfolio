@@ -6,6 +6,9 @@ import { Store } from '@ngrx/store';
 import { ApiService } from '../api-service.service';
 import { disconnectUser, loginUser } from '../store/auth/auth-action';
 import { DateFormatService } from '../date-format.service';
+import { Modeles, ModelesState, selectModeles } from '../store/modeles/modeles-reduces';
+import { getAllModeles } from '../store/modeles/modeles-actions';
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,15 +18,18 @@ import { DateFormatService } from '../date-format.service';
 export class NavbarComponent implements OnInit{
   menuOpen: any;
   user$: Observable<User | null>;
-  constructor(private router: Router, private store: Store<UserState>,private apiService: ApiService, private dateService: DateFormatService) {
-    this.user$ = this.store.select(selectUser);
+  modeles$: Observable<Modeles[] | null>;
+  constructor(private router: Router,  private modelesStore: Store<ModelesState>,private userStore: Store<UserState>,private apiService: ApiService, private dateService: DateFormatService) {
+    this.user$ = this.userStore.select(selectUser);
+    this.modeles$ = this.modelesStore.select(selectModeles);
   }
   ngOnInit(): void {
+    this.fakeModeles();
     if(localStorage.getItem("token")){
       this.apiService.getDataWithToken('auth').subscribe({
         next: (userResponse) => {
           console.log(userResponse);
-          this.store.dispatch(loginUser({
+          this.userStore.dispatch(loginUser({
             user: {
               id: userResponse.id,
               firstName: userResponse.firstName, 
@@ -65,6 +71,31 @@ export class NavbarComponent implements OnInit{
   }
   logout(){
     localStorage.removeItem("token");
-    this.store.dispatch(disconnectUser());
+    this.userStore.dispatch(disconnectUser());
+  }
+  fakeModeles(){
+    
+    const fakeModeles: Modeles[] = [];
+    const baseDate = new Date();
+
+    for (let i = 0; i < 20; i++) {
+      const day = String(baseDate.getDate()).padStart(2, '0');
+      const month = String(baseDate.getMonth() + 1).padStart(2, '0'); 
+      const year = baseDate.getFullYear();
+      const formattedDate = `${day}/${month}/${year}`;
+
+      fakeModeles.push({
+        id: (i + 1).toString(),
+        name: `Modèle ${i + 1}`,
+        author: `Auteur ${i + 1}`,
+        script: `https://picsum.photos/200/300?random=${i + 1}`, 
+        isPremium: i % 5 === 0, 
+        dateCreation: formattedDate, 
+      });
+    
+      baseDate.setDate(baseDate.getDate() - 1); 
+    }
+    this.modelesStore.dispatch(getAllModeles({ Modeles: fakeModeles }));
+
   }
 }

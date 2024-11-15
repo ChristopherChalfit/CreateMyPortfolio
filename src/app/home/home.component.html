@@ -1,42 +1,74 @@
-<section class="hero bg-[#102d66] text-[#fffffa] py-8 md:py-16 rounded-[0.5rem]">
-    <div class="container mx-auto text-center px-4">
-      <h1 class="text-2xl md:text-4xl font-bold mb-4">Créez Votre Portfolio Automatiquement</h1>
-      <p class="text-lg md:text-xl mb-8">Importez votre CV ou créez manuellement votre portfolio professionnel</p>
-      <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <button class="btn text-[#102d66] bg-white px-6 py-2 rounded-lg">Importer un CV</button>
-        <button class="btn text-[#102d66] bg-white px-6 py-2 rounded-lg">Créer Manuellement</button>
-      </div>
+<section id="presentation" class="flex md:flex-row flex-col justify-between max-w-screen-lg mx-auto px-4" data-aos="fade-up">
+  <div class="flex flex-col justify-center w-full md:w-1/2">
+    <h2 class="text-3xl font-bold">Bienvenue sur CreateMyPortfolio !</h2>
+    <p class="mt-4 text-lg">Créez facilement votre portfolio en ligne, sans compétences techniques. Que vous soyez artiste, designer ou entrepreneur, notre plateforme intuitive vous permet de mettre en valeur vos projets et de vous démarquer. Avec des modèles personnalisables et des outils simples, vous pouvez exprimer votre créativité et présenter vos réalisations de manière professionnelle.</p>
+    <p class="mt-2 text-lg">Rejoignez une communauté grandissante de créateurs et donnez vie à votre vision. Commencez dès aujourd'hui et montrez au monde ce que vous savez faire !</p>
+  </div>
+  <div class="w-full md:w-1/2">
+    <img src="./assets/presentation.svg" class="w-full h-auto" alt="Image de présentation">
+  </div>
+</section>
+
+<section id="presentationStaff" data-aos="fade-up" class="text-[#0B3954]">
+  <div class="overflow-hidden w-full">
+    <svg xmlns="http://www.w3.org/2000/svg" width="2089.302" height="530.42" viewBox="0 0 2089.302 530.42">
+      <path id="Tracé_124" data-name="Tracé 124" d="M3994,1102.773V970.168s132.843-71.607,467.509-71.607,499.278,153.159,871.154,71.607,616.351-397.815,616.351-397.815l134.288,530.42Z" transform="translate(-3994 -572.352)" fill="#124f73"/>
+      <path id="Tracé_125" data-name="Tracé 125" d="M3994,1004.546V896.5s132.336-58.346,465.723-58.346,497.371,124.8,867.826,58.346,614-324.145,614-324.145l133.775,432.194Z" transform="translate(-3994 -474.126)" fill="#bfd7ea"/>
+    </svg>
+  </div>
+  <div class="flex flex-col md:flex-row justify-center items-center px-4 bg-[#BFD7EA] pb-8 md:px-36">
+    <div class="flex flex-col justify-center items-center w-full md:w-1/2 text-center md:text-left py-6">
+      <h2 class="text-3xl font-bold">L'équipe de développement</h2>
+      <p class="mt-4 text-lg">Nous sommes une équipe passionnée de développeurs dédiée à la création de solutions innovantes. Notre objectif est de fournir une plateforme intuitive qui permet à chacun de créer son propre portfolio en ligne, sans avoir besoin de compétences techniques.</p>
+      <p class="mt-2 text-lg">Chaque membre de notre équipe apporte son expertise unique, allant du design à la programmation, pour garantir que votre expérience soit fluide et agréable. Rejoignez-nous dans cette aventure et découvrez comment nous pouvons vous aider à mettre en valeur vos projets !</p>
     </div>
-  </section>
-  
-  <section class="features py-8 md:py-16">
-    <div class="container mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Fonctionnalités</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div class="feature-card text-center p-6 bg-base-100 rounded-lg shadow-lg">
-          <i class="fas fa-file-import text-3xl md:text-4xl text-primary mb-4"></i>
-          <h3 class="text-lg md:text-xl font-semibold mb-2">Importation de CV</h3>
-          <p>Transformez rapidement votre CV en un portfolio attrayant</p>
-        </div>
-        <div class="feature-card text-center p-6 bg-base-100 rounded-lg shadow-lg">
-          <i class="fas fa-pencil-alt text-3xl md:text-4xl text-primary mb-4"></i>
-          <h3 class="text-lg md:text-xl font-semibold mb-2">Création Manuelle</h3>
-          <p>Concevez votre portfolio étape par étape avec notre interface intuitive</p>
-        </div>
-        <div class="feature-card text-center p-6 bg-base-100 rounded-lg shadow-lg">
-          <i class="fas fa-palette text-3xl md:text-4xl text-primary mb-4"></i>
-          <h3 class="text-lg md:text-xl font-semibold mb-2">Personnalisation</h3>
-          <p>Choisissez parmi une variété de thèmes et de mises en page</p>
-        </div>
-      </div>
+    <div class="w-full md:w-1/2 flex justify-center">
+      <img src="./assets/screen.png" class="w-96 object-contain object-center rounded-full" alt="Screenshot d'un des modèles">
     </div>
-  </section>
-  
-  <section class="hero bg-[#102d66] text-[#fffffa] py-8 md:py-16 rounded-[0.5rem]">
-    <div class="container mx-auto text-center px-4">
-      <h2 class="text-2xl md:text-3xl font-bold mb-4">Prêt à Créer Votre Portfolio ?</h2>
-      <p class="text-lg md:text-xl mb-8">Commencez dès maintenant et mettez en valeur vos compétences</p>
-      <a routerLink="/auth" class="btn text-[#102d66] bg-white px-6 py-2 rounded-lg">Démarrer</a>
+  </div>
+  <div class="bg-[#BFD7EA] flex flex-col justify-center items-center gap-2 pb-8 px-4">
+    <h2 class="text-[#BFD7EA] uppercase font-bold border-solid border-1 border-sky-500 bg-[#0B3954] rounded-2xl px-8 gap-2 shadow-[0px_4px_11px_13px_rgba(0,_0,_0,_0.1)]">l'équipe</h2>
+    <div class="flex md:flex-row flex-col flex-wrap justify-center gap-4 w-full md:w-1/2 items-center">
+      <figure class="hover:scale-125 flex flex-col bg-[#0B3954] text-[#BFD7EA] border-solid border-1 rounded-2xl items-center shadow-[0px_4px_11px_13px_rgba(0,_0,_0,_0.1)] gap-2 pb-4 w-1/2">
+        <img src="./assets/christopher.png" class="w-96 object-contain object-center" alt="Photo de Christopher Chalafit">
+        <h1>Christopher Chalafit</h1>
+        <p>Développeur Angular, Nestjs, HTML ...</p>
+        <div class="flex flex-row gap-2">
+          <a href="https://github.com/ChristopherChalafit" target="_blank"><i class="fa-brands fa-github fa-lg"></i></a>
+          <a href="https://www.linkedin.com/in/christopher-chalafit-893873197/" target="_blank"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+          <a href="https://www.christopher-chalafit.fr/" target="_blank"><i class="fa-regular fa-address-card"></i></a>
+          <a href="mailto: christopher.chalafit@laposte.net"><i class="fa-regular fa-envelope"></i></a>
+        </div>  
+      </figure>   
     </div>
-  </section>
-  
+  </div>
+  <div class="overflow-hidden w-full max-h-56">
+    <svg xmlns="http://www.w3.org/2000/svg" width="2089.302" height="530.42" viewBox="0 0 2089.302 530.42" transform="scale(1, -1)">
+      <path id="Tracé_124_miroir" data-name="Tracé 124" d="M3994,1102.773V970.168s132.843-71.607,467.509-71.607,499.278,153.159,871.154,71.607,616.351-397.815,616.351-397.815l134.288,530.42Z" transform="translate(-3994 -572.352)" fill="#124f73"/>
+      <path id="Tracé_125_miroir" data-name="Tracé 125" d="M3994,1004.546V896.5s132.336-58.346,465.723-58.346,497.371,124.8,867.826,58.346,614-324.145,614-324.145l133.775,432.194Z" transform="translate(-3994 -474.126)" fill="#bfd7ea"/>
+    </svg>
+  </div>
+</section>
+<section id="modeles" class="text-[#BFD7EA] pb-16">
+  <div class="flex flex-col items-center justify-center transform gap-8">
+    <h2 class="uppercase text-[#0B3954] font-bold border-solid border-1 border-sky-500 bg-[#BFD7EA] rounded-2xl px-8 gap-2 shadow-[0px_4px_11px_13px_rgba(0,_0,_0,_0.1)]">nos modèles</h2>
+    <div class="grid md:grid-cols-4 flex-wrap justify-center gap-4 w-full md:w-1/2">
+      <ng-container *ngIf="modeles$ | async as modeles; else loading">
+        <ng-container *ngFor="let modele of sortModelesByDate(modeles).slice(0, 8)">
+          <figure class="hover:z-50 hover:scale-125 relative flex flex-col bg-[#0B3954] text-[#BFD7EA] border-solid border-1 rounded items-center shadow-[0px_4px_11px_rgba(0,_0,_0,_0.1)] gap-2 pb-4">
+            <img [src]="modele.script" class="object-contain object-center rounded-t" alt="Screenshot de {{ modele.name }}">
+            <h1>{{ modele.name }}</h1>
+            <div class="flex flex-row gap-2">
+              <a [href]="modele.author" target="_blank"><i class="fa-solid fa-at fa-lg"></i> {{modele.author}}</a>
+            </div>
+            <span *ngIf="modele.isPremium" class="absolute top-2 right-2 bg-yellow-500 text-white font-bold text-lg rounded-full px-2 py-1 transform rotate-12 shadow-lg">VIP</span>
+          </figure>
+        </ng-container>
+      </ng-container>
+      <ng-template #loading>
+        <p>Chargement des modèles...</p>
+      </ng-template>
+    </div>
+    <a [routerLink]="['./modeles']" class="hover:scale-125 uppercase text-[#0B3954] font-bold border-solid border-1 border-sky-500 bg-[#BFD7EA] rounded-2xl px-8 gap-2">Explorez les modèles</a>
+  </div>
+</section>

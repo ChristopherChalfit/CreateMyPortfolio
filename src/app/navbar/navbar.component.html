@@ -1,16 +1,16 @@
-<div class="navbar bg-base-100 px-4 sm:px-6 lg:px-8 flex-col md:flex-row">
+<div class="navbar max-h-24 md:px-4 px-0 flex-col md:flex-row mt-2">
   <div class="flex-1 flex items-center justify-between w-full">
     <!-- Logo et redirection -->
-    <a [routerLink]="['./']" class="flex items-center">
+    <a [routerLink]="['./']" class="flex items-center pl-2">
       <img
-        src="./assets/logo.png"
+        src="./assets/logo.svg"
         [alt]="title"
-        class="w-24 h-24 sm:w-32 sm:h-32"
+        class="max-h-24 sm:w-32 sm:h-32"
         (click)="redirectToHome()" />
     </a>
 
     <!-- Bouton Hamburger pour mobile -->
-    <div class="md:hidden">
+    <div class="md:hidden pr-4">
       <button
         class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700"
         aria-label="Menu"
@@ -22,10 +22,28 @@
     </div>
 
     <!-- Menu en grand écran -->
-    <div class="hidden md:flex items-center space-x-4">
-      <a [routerLink]="['./auth']" class="text-lg font-medium text-gray-700 hover:text-gray-900" *ngIf="!(user$ | async); else loggedInLinks" >
-        Se Connecter / S'inscrire
-      </a>
+    <nav class="hidden md:flex items-center space-x-4 w-full justify-end">
+      <ol class="flex flex-row gap-4 uppercase">
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md" *ngIf="!(user$ | async); else loggedInLinks" >
+         accueil
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          présentation
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          l'équipe
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          nos modèles
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          contact
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#0B3954] border-solid border-1 border-sky-500 bg-[#BFD7EA] rounded-2xl px-2 hover:shadow-md hover:bg-[#A3C6D4]" *ngIf="!(user$ | async); else loggedInLinks" >
+          Se Connecter
+        </a></li>
+      </ol>
+      
 
      
       <!-- Avatar utilisateur -->
@@ -50,20 +68,57 @@
           <li ><a (click)="logout()" routerLink="/auth">Déconnexion</a></li>
         </ul>
       </div>
-    </div>
+    </nav>
   </div>
 
   <!-- Menu déroulant en mobile -->
   <div
     [class.block]="menuOpen"
     [class.hidden]="!menuOpen"
-    class="md:hidden flex-col">
-    <a [routerLink]="['./auth']" class="text-lg font-medium text-gray-700 hover:text-gray-900" *ngIf="!(user$ | async); else loggedInLinks" >
-      Se Connecter / S'inscrire
-    </a>
+    class="md:hidden flex-col w-full z-50 bg-[#0B3954] bg-opacity-70">
+    <ol class="flex flex-col gap-4 uppercase items-center py-4">
+      <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md" *ngIf="!(user$ | async); else loggedInLinks" >
+       accueil
+      </a></li>
+      <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        présentation
+      </a></li>
+      <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        l'équipe
+      </a></li>
+      <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        nos modèles
+      </a></li>
+      <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+        contact
+      </a></li>
+      <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#0B3954] border-solid border-1 border-sky-500 bg-[#BFD7EA] rounded-2xl px-2 hover:shadow-md hover:bg-[#A3C6D4]" *ngIf="!(user$ | async); else loggedInLinks" >
+        Se Connecter
+      </a></li>
+    </ol>
   </div>
   <ng-template #loggedInLinks>
-    <ul class="flex flex-col md:flex-row gap-2">
+    <ul class="flex flex-col md:flex-row gap-2 gap-4 uppercase">
+      
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md" *ngIf="!(user$ | async); else loggedInLinks" >
+         accueil
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          présentation
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          l'équipe
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          nos modèles
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#BFD7EA] hover:underline hover:shadow-md">
+          contact
+        </a></li>
+        <li> <a [routerLink]="['./auth']" class="text-lg font-medium text-[#0B3954] border-solid border-1 border-sky-500 bg-[#BFD7EA] rounded-2xl px-2 hover:shadow-md hover:bg-[#A3C6D4]" *ngIf="!(user$ | async); else loggedInLinks" >
+          Se Connecter
+        </a></li>
+      
       <li>
         <a routerLink="/profile">Profile {{ (user$ | async)?.firstName }}</a>
       </li>

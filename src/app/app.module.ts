@@ -38,7 +38,7 @@ import { ToolboxComponent } from './toolbox/toolbox.component';
 import { EditorComponent } from './editor/editor.component';
 import { NavbarPortfolioComponent } from './navbar-portfolio/navbar-portfolio.component';
 import { SectionPortfolioComponent } from './section-portfolio/section-portfolio.component';
-
+import { modelesReducer } from './store/modeles/modeles-reduces';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +49,8 @@ import { SectionPortfolioComponent } from './section-portfolio/section-portfolio
     ToolboxComponent,
     EditorComponent,
     NavbarPortfolioComponent,
-    SectionPortfolioComponent
+    SectionPortfolioComponent,
+  
   ],
   imports: [
     DragDropModule,
@@ -96,7 +97,7 @@ import { SectionPortfolioComponent } from './section-portfolio/section-portfolio
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ user: userReducer, portfolio: portfolioReducer }),
+    StoreModule.forRoot({ user: userReducer, portfolio: portfolioReducer, modeles: modelesReducer }),
     RouterModule.forRoot(routes),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
